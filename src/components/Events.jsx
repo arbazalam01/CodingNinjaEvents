@@ -14,6 +14,10 @@ function Events({ AllEvents }) {
                 image={Event.cover_picture}
                 desc={Event.short_desc}
                 alltags={Event.card_tags}
+                venue={Event.venue}
+                fees={Event.fees}
+                start_date={Event.event_start_time}
+                registered_users={Event.registered_users}
               />
             </Grid>
           );

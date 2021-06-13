@@ -10,13 +10,13 @@ const useStyles = makeStyles({
   },
 });
 
-function TopBar({ event_change, value }) {
+function SecondaryTopBar({ event_sub_change, value }) {
   const classes = useStyles();
   // const [value, setValue] = useState("WEBINAR");
 
   const handleChange = (e, newValue) => {
     // console.log(newValue);
-    event_change(newValue);
+    event_sub_change(newValue);
   };
 
   return (
@@ -26,15 +26,13 @@ function TopBar({ event_change, value }) {
         onChange={handleChange}
         indicatorColor="secondary"
         textColor="secondary"
-        centered
       >
-        <Tab label="Webinar" value="WEBINAR" />
-        <Tab label="Coding Events" value="CODING_EVENT" />
-        <Tab label="Bootcamp Events" value="BOOTCAMP_EVENT" />
-        <Tab label="Workshop" value="WORKSHOP" />
+        <Tab label="Upcoming" value="Upcoming" />
+        <Tab label="Archived" value="Archived" />
+        <Tab label="All Time Favorites" value="All Time Favorites" />
       </Tabs>
     </Paper>
   );
 }
 
-export default TopBar;
+export default SecondaryTopBar;

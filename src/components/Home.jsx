@@ -5,6 +5,7 @@ import TopBar from "./TopBar";
 import AllTags from "./AllTags";
 import Events from "./Events";
 import axios from "axios";
+import SecondaryTopBar from "./SecondaryTopBar";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,20 +18,13 @@ function Home() {
 
   const [AllEvents, setAllEvents] = useState([]);
   const [event_category, setEvent_category] = useState("WEBINAR");
+  const [event_sub_category, setEvent_sub_category] = useState("Upcoming");
   const [selected_tags, setSelected_Tags] = useState([]);
   const [tag_str, setTag_str] = useState("Interview Preparation");
 
   const event_change = (val) => setEvent_category(val);
-  // const tag_change = (new_tag) => {
-  //   setTag_list(new_tag);
-  //   // console.log(tag_list);
-  //   let tags_str = "";
-  //   tag_list.map((curr_tag) => {
-  //     tags_str += curr_tag + ",";
-  //   });
-  //   // console.log(new_tag);
-  //   setTag_str(tags_str);
-  // };
+  const event_sub_change = (val) => setEvent_sub_category(val);
+
   useEffect(() => {
     console.log(selected_tags);
     let tags_str = "";
@@ -44,7 +38,7 @@ function Home() {
   useEffect(() => {
     axios
       .get(
-        `https://api.codingninjas.com/api/v3/events?event_category=${event_category}&event_sub_category=Upcoming&tag_list=${tag_str}&offset`
+        `https://api.codingninjas.com/api/v3/events?event_category=${event_category}&event_sub_category=${event_sub_category}&tag_list=${tag_str}&offset`
       )
       .then((res) => {
         setAllEvents(res.data.data.events);
@@ -53,15 +47,19 @@ function Home() {
       .catch((err) => {
         console.log(err);
       });
-  }, [event_category, tag_str]);
+  }, [event_category, tag_str, event_sub_category]);
 
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <TopBar event_change={event_change} value={event_category} />
+          <SecondaryTopBar
+            event_sub_change={event_sub_change}
+            value={event_sub_category}
+          />
         </Grid>
-        <Grid item xs={10}>
+        <Grid item xs={9}>
           {/* <Paper className={classes.paper}>xs=6</Paper> */}
           <Events AllEvents={AllEvents} />
         </Grid>
