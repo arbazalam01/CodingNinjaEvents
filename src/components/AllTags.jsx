@@ -30,9 +30,9 @@ const useStyles = makeStyles({
   },
 });
 
-function AllTags({ set_tags }) {
+function AllTags({ set_tags, setSelectedtags, selectedtags }) {
   const [tags, setTags] = useState([]);
-  const [selectedtags, setSelectedtags] = useState([]);
+  // const [selectedtags, setSelectedtags] = useState([]);
   const classes = useStyles();
 
   useEffect(() => {
@@ -55,20 +55,19 @@ function AllTags({ set_tags }) {
     let filt_arr = [];
     let temp_tag = e.target.innerHTML;
     if (!selectedtags.includes(temp_tag)) {
-      setSelectedtags([...selectedtags, temp_tag]);
+      setSelectedtags((selectedtags) => [...selectedtags, temp_tag]);
+      // console.log("Arbaz");
     } else {
       filt_arr = selectedtags.filter((e) => e !== temp_tag);
       setSelectedtags(filt_arr);
+      // console.log(selectedtags);
     }
-
-    // console.log(temp_tag);
   };
 
   return (
     <div>
       <h1>Tags</h1>
       {tags.map((tag) => {
-        // if (!selectedtags.includes(tag)) {
         let className = classes["tags"];
         if (selectedtags.includes(tag)) {
           className = classes["selectd_tags"];
@@ -78,17 +77,6 @@ function AllTags({ set_tags }) {
             {tag}
           </Box>
         );
-        //   } else {
-        //     return (
-        //       <Box
-        //         className={classes.selectd_tags}
-        //         component="div"
-        //         onClick={handlechange}
-        //       >
-        //         {tag}
-        //       </Box>
-        //     );
-        //   }
       })}
     </div>
   );

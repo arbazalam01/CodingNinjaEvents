@@ -17,20 +17,29 @@ function Home() {
 
   const [AllEvents, setAllEvents] = useState([]);
   const [event_category, setEvent_category] = useState("WEBINAR");
-  const [tag_list, setTag_list] = useState([]);
+  const [selected_tags, setSelected_Tags] = useState([]);
   const [tag_str, setTag_str] = useState("Interview Preparation");
 
   const event_change = (val) => setEvent_category(val);
-  const tag_change = (new_tag) => {
-    setTag_list(new_tag);
-    // console.log(tag_list);
+  // const tag_change = (new_tag) => {
+  //   setTag_list(new_tag);
+  //   // console.log(tag_list);
+  //   let tags_str = "";
+  //   tag_list.map((curr_tag) => {
+  //     tags_str += curr_tag + ",";
+  //   });
+  //   // console.log(new_tag);
+  //   setTag_str(tags_str);
+  // };
+  useEffect(() => {
+    console.log(selected_tags);
     let tags_str = "";
-    tag_list.map((curr_tag) => {
+    selected_tags.map((curr_tag) => {
       tags_str += curr_tag + ",";
     });
-    console.log(new_tag);
+    console.log(tags_str);
     setTag_str(tags_str);
-  };
+  }, [selected_tags]);
 
   useEffect(() => {
     axios
@@ -39,7 +48,7 @@ function Home() {
       )
       .then((res) => {
         setAllEvents(res.data.data.events);
-        console.log(event_category, tag_str);
+        // console.log(event_category, tag_str);
       })
       .catch((err) => {
         console.log(err);
@@ -58,7 +67,10 @@ function Home() {
         </Grid>
         <Grid item xs={2}>
           {/* <Paper className={classes.paper}>xs=6</Paper> */}
-          <AllTags set_tags={tag_change} />
+          <AllTags
+            setSelectedtags={setSelected_Tags}
+            selectedtags={selected_tags}
+          />
         </Grid>
       </Grid>
     </div>
