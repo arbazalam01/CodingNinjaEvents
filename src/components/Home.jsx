@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
-import { Grid, ThemeProvider } from "@material-ui/core";
+import { Grid, ThemeProvider, Box } from "@material-ui/core";
 import Brightness7Icon from "@material-ui/icons/Brightness7";
 import Brightness3Icon from "@material-ui/icons/Brightness3";
 import TopBar from "./TopBar";
@@ -8,6 +8,7 @@ import AllTags from "./AllTags";
 import Events from "./Events";
 import axios from "axios";
 import SecondaryTopBar from "./SecondaryTopBar";
+import Pagination_comp from "./Pagination_comp";
 import Header from "./Header";
 
 const useStyles = makeStyles((theme) => ({
@@ -33,13 +34,16 @@ function Home() {
   const [event_category, setEvent_category] = useState("ALL_EVENTS");
   const [event_sub_category, setEvent_sub_category] = useState("Upcoming");
   const [selected_tags, setSelected_Tags] = useState([]);
+  const [offset, setOffset] = useState(0);
   const [tag_str, setTag_str] = useState("");
   const [theme, setTheme] = useState(true);
+  const [count, setCount] = useState(0);
   const icon = !theme ? <Brightness7Icon /> : <Brightness3Icon />;
   const appliedTheme = createMuiTheme(theme ? light : dark);
 
   const event_change = (val) => setEvent_category(val);
   const event_sub_change = (val) => setEvent_sub_category(val);
+  const offset_change = (val) => setOffset(val);
 
   useEffect(() => {
     // console.log(selected_tags);
@@ -54,22 +58,23 @@ function Home() {
   useEffect(() => {
     axios
       .get(
-        `https://api.codingninjas.com/api/v3/events?event_category=${event_category}&event_sub_category=${event_sub_category}&tag_list=${tag_str}&offset`
+        `https://api.codingninjas.com/api/v3/events?event_category=${event_category}&event_sub_category=${event_sub_category}&tag_list=${tag_str}&offset=${offset}`
       )
       .then((res) => {
         setAllEvents(res.data.data.events);
+        setCount(res.data.data.page_count);
         // console.log(event_category, tag_str);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [event_category, tag_str, event_sub_category]);
+  }, [event_category, tag_str, event_sub_category, offset]);
 
   return (
     <div className={classes.root}>
-      <ThemeProvider theme={appliedTheme}>
-        <Header icon={icon} settheme={setTheme} theme={theme} />
-        <Grid container spacing={3}>
+      <Header icon={icon} settheme={setTheme} theme={theme} />
+      <Grid container spacing={3}>
+        <ThemeProvider theme={appliedTheme}>
           <Grid item xs={12}>
             <TopBar event_change={event_change} value={event_category} />
             <SecondaryTopBar
@@ -77,19 +82,29 @@ function Home() {
               value={event_sub_category}
             />
           </Grid>
-          <Grid item xs={9}>
+        </ThemeProvider>
+        <Grid item xs={9}>
+          <ThemeProvider theme={appliedTheme}>
             {/* <Paper className={classes.paper}>xs=6</Paper> */}
             <Events AllEvents={AllEvents} />
-          </Grid>
-          <Grid item xs={2}>
-            {/* <Paper className={classes.paper}>xs=6</Paper> */}
-            <AllTags
-              setSelectedtags={setSelected_Tags}
-              selectedtags={selected_tags}
-            />
-          </Grid>
+          </ThemeProvider>
+
+          {!(Array.isArray(AllEvents) && AllEvents.length) ? (
+            ""
+          ) : (
+            <Box mt={2} ml={70}>
+              <Pagination_comp count={count} offset_change={offset_change} />
+            </Box>
+          )}
         </Grid>
-      </ThemeProvider>
+        <Grid item xs={2}>
+          {/* <Paper className={classes.paper}>xs=6</Paper> */}
+          <AllTags
+            setSelectedtags={setSelected_Tags}
+            selectedtags={selected_tags}
+          />
+        </Grid>
+      </Grid>
     </div>
   );
 }
