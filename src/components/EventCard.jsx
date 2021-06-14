@@ -1,14 +1,13 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
+
 import Tooltip from "@material-ui/core/Tooltip";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
+import { Grid, Box } from "@material-ui/core";
 
 const useStyles = makeStyles({
   root: {
@@ -56,6 +55,7 @@ function EventCard({
   fees,
   start_date,
   registered_users,
+  status,
 }) {
   const classes = useStyles();
   let event_date = new Date(start_date * 1000);
@@ -86,7 +86,7 @@ function EventCard({
               Entry Fee
             </Typography>
             <Typography variant="body2" color="textPrimary" component="p">
-              {fees ? fees : "Free"}
+              {fees ? `₹ ${fees}` : "Free"}
             </Typography>
           </Box>
           <Box>
@@ -104,26 +104,42 @@ function EventCard({
           </Typography>
         </Box>
         <Box container className={classes.tagcontainer}>
-          {alltags.map((tag) => {
+          {alltags.map((tag, index) => {
             return (
-              <Box className={classes.tags} component="span">
+              <Box key={index} className={classes.tags} component="span">
                 {tag}
               </Box>
             );
           })}
         </Box>
-        <Box className={classes.avatars} mt={5}>
-          {registered_users.top_users.map((curr_user) => {
-            return (
-              <Tooltip title={curr_user.name}>
-                <Avatar alt="" src={curr_user.image_url} />
-              </Tooltip>
-            );
-          })}
-        </Box>
-        <Typography variant="body2" color="textSecondary" component="p">
-          and <b>{registered_users.other_users_count}</b> others registered
-        </Typography>
+        <Grid container>
+          <Grid item xs={9}>
+            <Box className={classes.avatars} mt={5}>
+              {registered_users.top_users.map((curr_user, index) => {
+                return (
+                  <Tooltip key={index} title={curr_user.name}>
+                    <Avatar alt="" src={curr_user.image_url} />
+                  </Tooltip>
+                );
+              })}
+            </Box>
+            <Typography variant="body2" color="textSecondary" component="p">
+              and <b>{registered_users.other_users_count}</b> others registered
+            </Typography>
+          </Grid>
+          {status === "Upcoming" ? (
+            <Grid item xs={3}>
+              <Box height={30} mt={7} clone>
+                <img
+                  src="https://files.codingninjas.in/0000000000001272.png"
+                  alt=""
+                />
+              </Box>
+            </Grid>
+          ) : (
+            ""
+          )}
+        </Grid>
       </CardContent>
     </Card>
   );

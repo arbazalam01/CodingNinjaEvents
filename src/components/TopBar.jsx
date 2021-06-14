@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Tabs from "@material-ui/core/Tabs";
@@ -28,6 +28,7 @@ function TopBar({ event_change, value }) {
         textColor="secondary"
         centered
       >
+        <Tab label="All Events" value="ALL_EVENTS" />
         <Tab label="Webinar" value="WEBINAR" />
         <Tab label="Coding Events" value="CODING_EVENT" />
         <Tab label="Bootcamp Events" value="BOOTCAMP_EVENT" />

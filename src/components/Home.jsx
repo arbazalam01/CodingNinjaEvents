@@ -1,37 +1,53 @@
 import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
+import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
+import { Grid, ThemeProvider } from "@material-ui/core";
+import Brightness7Icon from "@material-ui/icons/Brightness7";
+import Brightness3Icon from "@material-ui/icons/Brightness3";
 import TopBar from "./TopBar";
 import AllTags from "./AllTags";
 import Events from "./Events";
 import axios from "axios";
 import SecondaryTopBar from "./SecondaryTopBar";
+import Header from "./Header";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
 }));
+const light = {
+  palette: {
+    type: "light",
+  },
+};
+const dark = {
+  palette: {
+    type: "dark",
+  },
+};
 
 function Home() {
   const classes = useStyles();
 
   const [AllEvents, setAllEvents] = useState([]);
-  const [event_category, setEvent_category] = useState("WEBINAR");
+  const [event_category, setEvent_category] = useState("ALL_EVENTS");
   const [event_sub_category, setEvent_sub_category] = useState("Upcoming");
   const [selected_tags, setSelected_Tags] = useState([]);
-  const [tag_str, setTag_str] = useState("Interview Preparation");
+  const [tag_str, setTag_str] = useState("");
+  const [theme, setTheme] = useState(true);
+  const icon = !theme ? <Brightness7Icon /> : <Brightness3Icon />;
+  const appliedTheme = createMuiTheme(theme ? light : dark);
 
   const event_change = (val) => setEvent_category(val);
   const event_sub_change = (val) => setEvent_sub_category(val);
 
   useEffect(() => {
-    console.log(selected_tags);
+    // console.log(selected_tags);
     let tags_str = "";
     selected_tags.map((curr_tag) => {
-      tags_str += curr_tag + ",";
+      return (tags_str += curr_tag + ",");
     });
-    console.log(tags_str);
+    // console.log(tags_str);
     setTag_str(tags_str);
   }, [selected_tags]);
 
@@ -51,26 +67,29 @@ function Home() {
 
   return (
     <div className={classes.root}>
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <TopBar event_change={event_change} value={event_category} />
-          <SecondaryTopBar
-            event_sub_change={event_sub_change}
-            value={event_sub_category}
-          />
+      <ThemeProvider theme={appliedTheme}>
+        <Header icon={icon} settheme={setTheme} theme={theme} />
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <TopBar event_change={event_change} value={event_category} />
+            <SecondaryTopBar
+              event_sub_change={event_sub_change}
+              value={event_sub_category}
+            />
+          </Grid>
+          <Grid item xs={9}>
+            {/* <Paper className={classes.paper}>xs=6</Paper> */}
+            <Events AllEvents={AllEvents} />
+          </Grid>
+          <Grid item xs={2}>
+            {/* <Paper className={classes.paper}>xs=6</Paper> */}
+            <AllTags
+              setSelectedtags={setSelected_Tags}
+              selectedtags={selected_tags}
+            />
+          </Grid>
         </Grid>
-        <Grid item xs={9}>
-          {/* <Paper className={classes.paper}>xs=6</Paper> */}
-          <Events AllEvents={AllEvents} />
-        </Grid>
-        <Grid item xs={2}>
-          {/* <Paper className={classes.paper}>xs=6</Paper> */}
-          <AllTags
-            setSelectedtags={setSelected_Tags}
-            selectedtags={selected_tags}
-          />
-        </Grid>
-      </Grid>
+      </ThemeProvider>
     </div>
   );
 }

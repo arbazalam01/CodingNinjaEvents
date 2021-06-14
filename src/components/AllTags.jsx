@@ -84,13 +84,18 @@ function AllTags({ set_tags, setSelectedtags, selectedtags }) {
           Clear All
         </IconButton>
       </Box>
-      {tags.map((tag) => {
+      {tags.map((tag, index) => {
         let className = classes["tags"];
         if (selectedtags.includes(tag)) {
           className = classes["selectd_tags"];
         }
         return (
-          <Box className={className} component="div" onClick={handlechange}>
+          <Box
+            key={index}
+            className={className}
+            component="div"
+            onClick={handlechange}
+          >
             {tag}
           </Box>
         );
