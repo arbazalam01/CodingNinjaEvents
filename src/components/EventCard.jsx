@@ -129,16 +129,14 @@ function EventCard({
           </Grid>
           {status === "Upcoming" ? (
             <Grid item xs={3}>
-              <Box height={30} mt={7} clone>
+              <Box height="4vw" maxHeight="33px" mt="10vh" clone>
                 <img
                   src="https://files.codingninjas.in/0000000000001272.png"
                   alt=""
                 />
               </Box>
             </Grid>
-          ) : (
-            ""
-          )}
+          ) : null}
         </Grid>
       </CardContent>
     </Card>

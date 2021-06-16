@@ -89,15 +89,13 @@ function Home() {
             <Events AllEvents={AllEvents} />
           </ThemeProvider>
 
-          {!(Array.isArray(AllEvents) && AllEvents.length) ? (
-            ""
-          ) : (
+          {!(Array.isArray(AllEvents) && AllEvents.length) ? null : (
             <Box mt="3rem" ml="55vw">
               <Pagination_comp count={count} offset_change={offset_change} />
             </Box>
           )}
         </Grid>
-        <Grid item md={2} xs={4}>
+        <Grid item md={3} xs={4}>
           {/* <Paper className={classes.paper}>xs=6</Paper> */}
           <AllTags
             setSelectedtags={setSelected_Tags}

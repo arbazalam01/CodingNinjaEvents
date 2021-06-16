@@ -6,9 +6,9 @@ import Box from "@material-ui/core/Box";
 function Events({ AllEvents }) {
   return (
     <div>
-      <Grid container spacing={3}>
+      <Grid container spacing={2}>
         {!(Array.isArray(AllEvents) && AllEvents.length) ? (
-          <Box mt={30} ml={45}>
+          <Box mt="50px" ml="25vw">
             <h1>No events found</h1>
           </Box>
         ) : (
