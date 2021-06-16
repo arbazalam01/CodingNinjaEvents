@@ -92,7 +92,7 @@ function Home() {
           {!(Array.isArray(AllEvents) && AllEvents.length) ? (
             ""
           ) : (
-            <Box mt={2} ml={70}>
+            <Box mt="3rem" ml="55vw">
               <Pagination_comp count={count} offset_change={offset_change} />
             </Box>
           )}

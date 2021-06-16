@@ -5,7 +5,7 @@ function Header({ icon, settheme, theme }) {
   return (
     <Grid container>
       <Grid item xs={5}>
-        <Box height={125} width={200} clone>
+        <Box height="8rem" width="20vw" clone>
           <img
             src="https://www.codingninjas.com/assets-landing/images/CNLOGO.svg"
             alt=""
