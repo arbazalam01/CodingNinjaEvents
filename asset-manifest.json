@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/CodingNinjaEvents/static/css/main.2ae47eeb.chunk.css",
-    "main.js": "/CodingNinjaEvents/static/js/main.57305426.chunk.js",
-    "main.js.map": "/CodingNinjaEvents/static/js/main.57305426.chunk.js.map",
+    "main.js": "/CodingNinjaEvents/static/js/main.e0b937cc.chunk.js",
+    "main.js.map": "/CodingNinjaEvents/static/js/main.e0b937cc.chunk.js.map",
     "runtime-main.js": "/CodingNinjaEvents/static/js/runtime-main.ad9c731b.js",
     "runtime-main.js.map": "/CodingNinjaEvents/static/js/runtime-main.ad9c731b.js.map",
     "static/js/2.97330584.chunk.js": "/CodingNinjaEvents/static/js/2.97330584.chunk.js",
@@ -15,6 +15,6 @@
     "static/js/runtime-main.ad9c731b.js",
     "static/js/2.97330584.chunk.js",
     "static/css/main.2ae47eeb.chunk.css",
-    "static/js/main.57305426.chunk.js"
+    "static/js/main.e0b937cc.chunk.js"
   ]
 }
