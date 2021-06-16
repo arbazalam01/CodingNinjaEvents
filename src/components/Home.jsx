@@ -83,7 +83,7 @@ function Home() {
             />
           </Grid>
         </ThemeProvider>
-        <Grid item xs={9}>
+        <Grid item md={9} xs={8}>
           <ThemeProvider theme={appliedTheme}>
             {/* <Paper className={classes.paper}>xs=6</Paper> */}
             <Events AllEvents={AllEvents} />
@@ -97,7 +97,7 @@ function Home() {
             </Box>
           )}
         </Grid>
-        <Grid item xs={2}>
+        <Grid item md={2} xs={4}>
           {/* <Paper className={classes.paper}>xs=6</Paper> */}
           <AllTags
             setSelectedtags={setSelected_Tags}
